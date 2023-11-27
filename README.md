@@ -6,7 +6,62 @@ The milvus service resouce maps external port 80 to port 19530.
 
 Milvus service health check external port 443 maps to port 9091
 
-The following code examples assume the below workflow since the vector ids will change depending on if the VectorInsert or VectorMultiInsert path is followed:
+<h2>Install Dependancies</h2>
+
+- [Kompose](https://kompose.io/installation/) converts Docker compose files to kubernetes resource files
+
+
+```
+# Linux
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.31.2/kompose-linux-amd64 -o kompose
+
+# Linux ARM64
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.31.2/kompose-linux-arm64 -o kompose
+
+# macOS
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.31.2/kompose-darwin-amd64 -o kompose
+
+# macOS ARM64
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.31.2/kompose-darwin-arm64 -o kompose
+
+chmod +x kompose
+sudo mv ./kompose /usr/local/bin/kompose
+```
+
+- Docker compose file for Milvus Standalone
+  
+```
+mkdir -p milvus-standalone/{docker,deploy} && cd ./milvus-standalone/docker
+wget https://github.com/milvus-io/milvus/releases/download/v2.3.3/milvus-standalone-docker-compose.yml -O docker-compose.yml
+cd ../deploy
+```
+<h2>Convert Docker compose file to Kubernetes resouce files</h2>
+
+```
+kompose -f ../docker/docker-compose.yml
+```
+
+<h2>Update external ports on milvus</h2>
+
+Milvus, by default, listens on port 19530 which will not typically be available for use by a user without openshift cluster admin privileges. Therefore, we adjust the ports in milvus-standalone.yaml to map the externally available port 80 to milvus port 19530.
+
+```
+sed -i -re 's/name\:\s+\"19530\"/name\: \"80\"/g'  \
+       -re  's/port\:\s+19530/port\: 80/g' \
+       ./standalone-service.yaml
+```
+
+<h2>Deploy Milvus onto Openshift</h2>
+
+```
+oc login --token=<YOUR_TOKEN> --server=<OPENSHIFT_SERVER>
+oc new-project milvus
+oc apply -f .
+```
+
+<h2>Example Operations on Milvus</h2>
+
+The following rest api examples assume the below workflow since the vector ids will change depending on if the VectorInsert or VectorMultiInsert path is followed:
 
 ```mermaid
 graph TD;
@@ -240,3 +295,12 @@ curl -s --request POST \
   "data": {}
 }
 ```
+
+<h2>References</h2>
+
+- [Kompose](https://kompose.io/)
+
+- [Milvus Standalone](https://milvus.io/docs/install_standalone-docker.md)
+
+- [Milvus Docker compose file](https://github.com/milvus-io/milvus/releases/download/v2.3.3/milvus-standalone-docker-compose.yml)
+
