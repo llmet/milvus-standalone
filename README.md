@@ -6,9 +6,10 @@ The milvus service resouce maps external port 80 to port 19530.
 
 Milvus service health check external port 443 maps to port 9091
 
-1. Create Collection
+<h3>Create Collection</h3>
 
-> curl -s --request POST \
+```
+curl -s --request POST \
      --url "${MILVUS_HOST}:${MILVUS_PORT}/v1/vector/collections/create" \
      --header "Authorization: Bearer ${TOKEN}" \
      --header "accept: application/json" \
@@ -20,17 +21,17 @@ Milvus service health check external port 443 maps to port 9091
        "metricType": "L2",
        "primaryField": "id",
        "vectorField": "vector"
-      }' | jq . 
+      }' | jq .
+```
 
-
-
-2. List Collection
-
-> curl -s --request GET \
+<h3>List Collection</h3>
+   
+```
+   curl -s --request GET \
      --url "${MILVUS_HOST}:${MILVUS_PORT}/v1/vector/collections" \
      --header "Authorization: Bearer ${TOKEN}" \
      --header "accept: application/json" \
      --header "content-type: application/json" | jq .
+```
 
-
-3. 
+4. 
