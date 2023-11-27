@@ -1,6 +1,6 @@
 # Milvus: Standalone
 
-Basic deploment files for standalone milvus implementation.
+This repo contains deploment files for a milvus-standalone deployment onto openshift.
 
 The milvus service resouce maps external port 80 to port 19530.
 
@@ -20,9 +20,7 @@ VectorGet-->VectorSearch;
 VectorSearch-->DropCollection;
 ```
 
-<h3>Create Collection</h3>
-
----
+<h2>Create Collection</h2>
 
 ```
 curl -s --request POST \
@@ -46,7 +44,7 @@ curl -s --request POST \
 }
 ```
 
-<h3>List Collection</h3>
+<h2>List Collection</h2>
    
 ```
    curl -s --request GET \
@@ -64,7 +62,7 @@ curl -s --request POST \
 }
 ```
 
-<h3>Describe Collection</h3>
+<h2>Describe Collection</h2>
 
 ```
 curl -s --request GET \
@@ -109,7 +107,7 @@ curl -s --request GET \
 }
 ```
 
-<h3>Vector Insert</h3>
+<h2>Vector Insert</h2>
 
 ```
 curl -s --request POST \
@@ -138,7 +136,7 @@ curl -s --request POST \
 }
 ```
 
-<h3>Vector Multi Insert</h3>
+<h2>Vector Multi Insert</h2>
 
 ```
 curl -s --request POST \
@@ -172,7 +170,7 @@ curl -s --request POST \
 }
 ```
 
-<h3>Vector Get</h3>
+<h2>Vector Get</h2>
 
 ```
 curl -s --request POST \
@@ -199,7 +197,7 @@ curl -s --request POST \
 }
 ```
 
-<h3>Vector Search</h3>
+<h2>Vector Search</h2>
 
 ```
 curl -s --request POST \
@@ -224,7 +222,7 @@ curl -s --request POST \
 }
 ```
 
-<h3>Drop Collection</h3>
+<h2>Drop Collection</h2>
 
 ```
 curl -s --request POST \
