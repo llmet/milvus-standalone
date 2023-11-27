@@ -8,7 +8,7 @@ Milvus service health check external port 443 maps to port 9091
 
 1. Create Collection
 
-curl -s --request POST \
+> curl -s --request POST \
      --url "${MILVUS_HOST}:${MILVUS_PORT}/v1/vector/collections/create" \
      --header "Authorization: Bearer ${TOKEN}" \
      --header "accept: application/json" \
@@ -20,13 +20,13 @@ curl -s --request POST \
        "metricType": "L2",
        "primaryField": "id",
        "vectorField": "vector"
-      }' | jq .
+      }' | jq . 
 
 
 
 2. List Collection
 
-curl -s --request GET \
+> curl -s --request GET \
      --url "${MILVUS_HOST}:${MILVUS_PORT}/v1/vector/collections" \
      --header "Authorization: Bearer ${TOKEN}" \
      --header "accept: application/json" \
